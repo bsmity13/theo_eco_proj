@@ -106,7 +106,7 @@ plot_sim <- function(sim){
       labels = expression(N[A], N[B], rho[A], rho[B]),
       name = "Population") +
     scale_linetype_manual(
-      values = c("solid", "dashed", "solid", "dashed"),
+      values = c("solid", "3131", "solid", "3131"),
       breaks = c("N_A", "N_B", "rho_A", "rho_B"),
       labels = expression(N[A], N[B], rho[A], rho[B]),
       name = "Population")
