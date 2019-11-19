@@ -105,9 +105,11 @@ plot_sim <- function(sim){
       breaks = c("N_A", "N_B", "rho_A", "rho_B"),
       labels = expression(N[A], N[B], rho[A], rho[B]),
       name = "Population") +
-    scale_linetype_discrete(breaks = c("N_A", "N_B", "rho_A", "rho_B"),
-                            labels = expression(N[A], N[B], rho[A], rho[B]),
-                            name = "Population")
+    scale_linetype_manual(
+      values = c("solid", "dashed", "solid", "dashed"),
+      breaks = c("N_A", "N_B", "rho_A", "rho_B"),
+      labels = expression(N[A], N[B], rho[A], rho[B]),
+      name = "Population")
   #Return
   return(ggp)
 }
