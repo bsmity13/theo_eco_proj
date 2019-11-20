@@ -101,18 +101,19 @@ plot_sim <- function(sim){
     theme_bw() +
     xlab("Time (t)") +
     ylab("Population Sizes") +
-    scale_color_brewer(type = "qual", palette = 2,
-      breaks = c("N_A", "N_B", "rho_A", "rho_B"),
-      labels = expression(N[A], N[B], rho[A], rho[B]),
+    scale_color_manual(
+      values = c("navyblue", "skyblue", "firebrick", "hotpink"),
+      breaks = c("N_A", "rho_A", "N_B", "rho_B"),
+      labels = expression(N[A], rho[A], N[B], rho[B]),
       name = "Population") +
     scale_linetype_manual(
       values = c("solid", "3131", "solid", "3131"),
-      breaks = c("N_A", "N_B", "rho_A", "rho_B"),
-      labels = expression(N[A], N[B], rho[A], rho[B]),
+      breaks = c("N_A", "rho_A", "N_B", "rho_B"),
+      labels = expression(N[A], rho[A], N[B], rho[B]),
       name = "Population") +
     scale_size_manual(values = c(2, 1.25, 2, 1.25),
-                      breaks = c("N_A", "N_B", "rho_A", "rho_B"),
-                      labels = expression(N[A], N[B], rho[A], rho[B]),
+                      breaks = c("N_A", "rho_A", "N_B", "rho_B"),
+                      labels = expression(N[A], rho[A], N[B], rho[B]),
                       name = "Population")
   #Return
   return(ggp)
