@@ -96,8 +96,8 @@ plot_sim <- function(sim){
   #Tidy data
   tidyd <- pivot_longer(sim, -t, names_to = "pop", values_to = "size")
   #ggplot
-  ggp <- ggplot(data = tidyd, aes(x = t, y = size, color = pop, linetype = pop)) +
-    geom_line(size = 2) +
+  ggp <- ggplot(data = tidyd, aes(x = t, y = size, color = pop, linetype = pop, size = pop)) +
+    geom_line() +
     theme_bw() +
     xlab("Time (t)") +
     ylab("Population Sizes") +
@@ -109,7 +109,11 @@ plot_sim <- function(sim){
       values = c("solid", "3131", "solid", "3131"),
       breaks = c("N_A", "N_B", "rho_A", "rho_B"),
       labels = expression(N[A], N[B], rho[A], rho[B]),
-      name = "Population")
+      name = "Population") +
+    scale_size_manual(values = c(2, 1.25, 2, 1.25),
+                      breaks = c("N_A", "N_B", "rho_A", "rho_B"),
+                      labels = expression(N[A], N[B], rho[A], rho[B]),
+                      name = "Population")
   #Return
   return(ggp)
 }
