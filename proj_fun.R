@@ -25,8 +25,8 @@
 # K_H <- c(200, 200)
 # #phi_H -- survival of predators in habitat H (vector of 2)
 # phi_H <- c(0.9, 0.9)
-# #epsilon -- conversion efficiency of predators (vector of 1)
-# epsilon <- 0.1
+# #epsilon -- conversion efficiency of predator in habitat H (vector of 2)
+# epsilon <- c(0.1, 0.1)
 # #kappa_H -- carrying capacity of predators in habitat H (vector of 2)
 # kappa_H <- c(20, 20)
 
@@ -58,8 +58,8 @@ rho_Htp1 <- function(phi_H, rho_Ht, epsilon, alpha_H, N_Ht, kappa_H){
   s1A <- phi_H[1] * rho_Ht[1]
   s1B <- phi_H[2] * rho_Ht[2]
   #Step 2. Growth due to predation
-  s2A <- epsilon * alpha_H[1] * rho_Ht[1] * N_Ht[1] * (1 - rho_Ht[1]/kappa_H[1])
-  s2B <- epsilon * alpha_H[2] * rho_Ht[2] * N_Ht[2] * (1 - rho_Ht[2]/kappa_H[2])
+  s2A <- epsilon[1] * alpha_H[1] * rho_Ht[1] * N_Ht[1] * (1 - rho_Ht[1]/kappa_H[1])
+  s2B <- epsilon[2] * alpha_H[2] * rho_Ht[2] * N_Ht[2] * (1 - rho_Ht[2]/kappa_H[2])
   #Combine
   rho_Htp1A <- s1A + s2A
   rho_Htp1B <- s1B + s2B
