@@ -12,9 +12,9 @@
 # #Test params----
 # #N_Ht -- number of prey in habitat H at time t (vector of 2)
 # N_Ht <- c(100, 100)
-# #psi_HH -- transition probability from H to H', i.e., from A to B
+# #T_HH -- transition probability from H to H', i.e., from A to B
 # #and from B to A (vector of 2)
-# psi_HH <- c(0.5, 0.5)
+# T_HH <- c(0.5, 0.5)
 # #alpha_H -- attack rate of the predator in habitat H (vector of 2)
 # alpha_H <- c(0.01, 0.01)
 # #rho_Ht -- number of predators in habitat H at time t (vector of 2)
@@ -31,11 +31,11 @@
 # kappa_H <- c(20, 20)
 
 #Prey growth----
-N_Htp1 <- function(N_Ht, psi_HH, alpha_H, rho_Ht, r, K_H){
+N_Htp1 <- function(N_Ht, T_HH, alpha_H, rho_Ht, r, K_H){
   #Breaking the equation into chunks for clarity
   #Step 1. Transition between habitats
-  s1A <- N_Ht[1] * (1 - psi_HH[1]) + N_Ht[2] * psi_HH[2] 
-  s1B <- N_Ht[2] * (1 - psi_HH[2]) + N_Ht[1] * psi_HH[1] 
+  s1A <- N_Ht[1] * (1 - T_HH[1]) + N_Ht[2] * T_HH[2] 
+  s1B <- N_Ht[2] * (1 - T_HH[2]) + N_Ht[1] * T_HH[1] 
   #Step 2. Predation
   s2A <- -1 * (alpha_H[1] * rho_Ht[1] * N_Ht[1])
   s2B <- -1 * (alpha_H[2] * rho_Ht[2] * N_Ht[2])
@@ -49,7 +49,7 @@ N_Htp1 <- function(N_Ht, psi_HH, alpha_H, rho_Ht, r, K_H){
   return(c(N_tp1A, N_tp1B))
 }
 
-#N_Htp1(N_Ht, psi_HH, alpha_H, rho_Ht, r, K_H)
+#N_Htp1(N_Ht, T_HH, alpha_H, rho_Ht, r, K_H)
 
 #Predator growth----
 rho_Htp1 <- function(phi_H, rho_Ht, epsilon, alpha_H, N_Ht, kappa_H){
@@ -70,13 +70,13 @@ rho_Htp1 <- function(phi_H, rho_Ht, epsilon, alpha_H, N_Ht, kappa_H){
 #rho_Htp1(phi_H, rho_Ht, epsilon, alpha_H, N_Ht, kappa_H)
 
 #Simulate the system----
-sim_system <- function(T = 100, N_Ht, rho_Ht, r, epsilon, phi_H, psi_HH, alpha_H, K_H, kappa_H){
+sim_system <- function(T = 100, N_Ht, rho_Ht, r, epsilon, phi_H, T_HH, alpha_H, K_H, kappa_H){
   #data.frame to hold results
   Res <- data.frame(t = 1, N_A = N_Ht[1], N_B = N_Ht[2], rho_A = rho_Ht[1], rho_B = rho_Ht[2])
   #Loop through times
   for(t in 2:T){
     #Calculate next prey population
-    N_H_next <- N_Htp1(N_Ht = Res[(t-1), c("N_A", "N_B")], psi_HH, alpha_H, rho_Ht = Res[(t-1), c("rho_A", "rho_B")], r, K_H)
+    N_H_next <- N_Htp1(N_Ht = Res[(t-1), c("N_A", "N_B")], T_HH, alpha_H, rho_Ht = Res[(t-1), c("rho_A", "rho_B")], r, K_H)
     #Calculate next predator population
     rho_H_next <- rho_Htp1(phi_H, rho_Ht = Res[(t-1), c("rho_A", "rho_B")], epsilon, alpha_H, N_Ht = Res[(t-1), c("N_A", "N_B")], kappa_H)
     #Create results row
@@ -88,7 +88,7 @@ sim_system <- function(T = 100, N_Ht, rho_Ht, r, epsilon, phi_H, psi_HH, alpha_H
   return(Res)
 }
 
-#basic <- sim_system(T = 100, N_Ht, rho_Ht, r, e, phi_H, psi_HH, alpha_H, K_H, kappa_H)
+#basic <- sim_system(T = 100, N_Ht, rho_Ht, r, e, phi_H, T_HH, alpha_H, K_H, kappa_H)
 
 #Plot the simulation----
 
