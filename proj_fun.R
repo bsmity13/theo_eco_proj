@@ -102,7 +102,7 @@ plot_sim <- function(sim){
     xlab("Time (t)") +
     ylab("Population Sizes") +
     scale_color_manual(
-      values = c("navyblue", "skyblue", "firebrick", "hotpink"),
+      values = c("navyblue", "firebrick", "skyblue", "hotpink"),
       breaks = c("N_A", "rho_A", "N_B", "rho_B"),
       labels = expression(N[A], rho[A], N[B], rho[B]),
       name = "Population") +
