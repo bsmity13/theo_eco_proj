@@ -25,8 +25,8 @@
 # K_H <- c(200, 200)
 # #phi_H -- survival of predators in habitat H (vector of 2)
 # phi_H <- c(0.9, 0.9)
-# #e -- conversion efficiency of predators (vector of 1)
-# e <- 0.1
+# #epsilon -- conversion efficiency of predators (vector of 1)
+# epsilon <- 0.1
 # #kappa_H -- carrying capacity of predators in habitat H (vector of 2)
 # kappa_H <- c(20, 20)
 
@@ -52,14 +52,14 @@ N_Htp1 <- function(N_Ht, psi_HH, alpha_H, rho_Ht, r, K_H){
 #N_Htp1(N_Ht, psi_HH, alpha_H, rho_Ht, r, K_H)
 
 #Predator growth----
-rho_Htp1 <- function(phi_H, rho_Ht, e, alpha_H, N_Ht, kappa_H){
+rho_Htp1 <- function(phi_H, rho_Ht, epsilon, alpha_H, N_Ht, kappa_H){
   #Breaking into chunks for clarity
   #Step 1. Survival
   s1A <- phi_H[1] * rho_Ht[1]
   s1B <- phi_H[2] * rho_Ht[2]
   #Step 2. Growth due to predation
-  s2A <- e * alpha_H[1] * rho_Ht[1] * N_Ht[1] * (1 - rho_Ht[1]/kappa_H[1])
-  s2B <- e * alpha_H[2] * rho_Ht[2] * N_Ht[2] * (1 - rho_Ht[2]/kappa_H[2])
+  s2A <- epsilon * alpha_H[1] * rho_Ht[1] * N_Ht[1] * (1 - rho_Ht[1]/kappa_H[1])
+  s2B <- epsilon * alpha_H[2] * rho_Ht[2] * N_Ht[2] * (1 - rho_Ht[2]/kappa_H[2])
   #Combine
   rho_Htp1A <- s1A + s2A
   rho_Htp1B <- s1B + s2B
@@ -67,10 +67,10 @@ rho_Htp1 <- function(phi_H, rho_Ht, e, alpha_H, N_Ht, kappa_H){
   return(c(rho_Htp1A, rho_Htp1B))
 }
 
-#rho_Htp1(phi_H, rho_Ht, e, alpha_H, N_Ht, kappa_H)
+#rho_Htp1(phi_H, rho_Ht, epsilon, alpha_H, N_Ht, kappa_H)
 
 #Simulate the system----
-sim_system <- function(T = 100, N_Ht, rho_Ht, r, e, phi_H, psi_HH, alpha_H, K_H, kappa_H){
+sim_system <- function(T = 100, N_Ht, rho_Ht, r, epsilon, phi_H, psi_HH, alpha_H, K_H, kappa_H){
   #data.frame to hold results
   Res <- data.frame(t = 1, N_A = N_Ht[1], N_B = N_Ht[2], rho_A = rho_Ht[1], rho_B = rho_Ht[2])
   #Loop through times
@@ -78,7 +78,7 @@ sim_system <- function(T = 100, N_Ht, rho_Ht, r, e, phi_H, psi_HH, alpha_H, K_H,
     #Calculate next prey population
     N_H_next <- N_Htp1(N_Ht = Res[(t-1), c("N_A", "N_B")], psi_HH, alpha_H, rho_Ht = Res[(t-1), c("rho_A", "rho_B")], r, K_H)
     #Calculate next predator population
-    rho_H_next <- rho_Htp1(phi_H, rho_Ht = Res[(t-1), c("rho_A", "rho_B")], e, alpha_H, N_Ht = Res[(t-1), c("N_A", "N_B")], kappa_H)
+    rho_H_next <- rho_Htp1(phi_H, rho_Ht = Res[(t-1), c("rho_A", "rho_B")], epsilon, alpha_H, N_Ht = Res[(t-1), c("N_A", "N_B")], kappa_H)
     #Create results row
     res <- data.frame(t = t, N_A = N_H_next[1], N_B = N_H_next[2], rho_A = rho_H_next[1], rho_B = rho_H_next[2])
     #Combine results
