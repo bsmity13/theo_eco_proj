@@ -21,7 +21,7 @@ library(ggplot2)
 
 #Base scenario, no predators----
 basic_nopred <- sim_system(T = 200, N_Ht = c(100, 100), rho_Ht = c(0, 0), 
-                      r = 0.1, e = 0.3, phi_H = c(0.95, 0.95), 
+                      r = 0.1, epsilon = 0.3, phi_H = c(0.95, 0.95), 
                       psi_HH = c(0.25, 0.25), alpha_H = c(0.02, 0.02), 
                       K_H = c(200, 200), kappa_H = c(20, 20))
 plot_sim(basic_nopred) +
@@ -30,7 +30,7 @@ plot_sim(basic_nopred) +
 
 #Base Scenario, with predators----
 basic_pred <- sim_system(T = 750, N_Ht = c(100, 100), rho_Ht = c(10, 10), 
-           r = 0.1, e = 0.3, phi_H = c(0.95, 0.95), 
+           r = 0.1, epsilon = 0.3, phi_H = c(0.95, 0.95), 
            psi_HH = c(0.25, 0.25), alpha_H = c(0.015, 0.015), 
            K_H = c(200, 200), kappa_H = c(25, 25))
 
@@ -48,7 +48,7 @@ plot_sim(basic_pred) +
 
 #Different K, no predators----
 preyK_nopred <- sim_system(T = 250, N_Ht = c(100, 100), rho_Ht = c(0, 0), 
-                      r = 0.1, e = 0.3, phi_H = c(0.95, 0.95), 
+                      r = 0.1, epsilon = 0.3, phi_H = c(0.95, 0.95), 
                       psi_HH = c(0.25, 0.25), alpha_H = c(0.02, 0.02), 
                       K_H = c(50, 200), kappa_H = c(20, 20))
 
@@ -60,7 +60,7 @@ plot_sim(preyK_nopred) +
 
 #Different K, no predators, no movement between habitats----
 preyK_nopred_nohab <- sim_system(T = 200, N_Ht = c(100, 100), rho_Ht = c(0, 0), 
-                                 r = 0.1, e = 0.3, phi_H = c(0.95, 0.95), 
+                                 r = 0.1, epsilon = 0.3, phi_H = c(0.95, 0.95), 
                                  psi_HH = c(0, 0), alpha_H = c(0.02, 0.02), 
                                  K_H = c(50, 200), kappa_H = c(20, 20))
 
@@ -73,7 +73,7 @@ plot_sim(preyK_nopred_nohab) +
 #Different K, no predators, habitat selection prop to K----
 #This seems like the ideal free distribution
 preyK_nopred_prophab <- sim_system(T = 200, N_Ht = c(100, 100), rho_Ht = c(0, 0), 
-                                 r = 0.1, e = 0.3, phi_H = c(0.95, 0.95), 
+                                 r = 0.1, epsilon = 0.3, phi_H = c(0.95, 0.95), 
                                  psi_HH = c(0.4, 0.1), alpha_H = c(0.02, 0.02), 
                                  K_H = c(50, 200), kappa_H = c(20, 20))
 
@@ -86,7 +86,7 @@ plot_sim(preyK_nopred_prophab) +
 
 #Different K, with predators----
 preyK_pred <- sim_system(T = 400, N_Ht = c(100, 100), rho_Ht = c(10, 10), 
-                           r = 0.1, e = 0.3, phi_H = c(0.95, 0.95), 
+                           r = 0.1, epsilon = 0.3, phi_H = c(0.95, 0.95), 
                            psi_HH = c(0.25, 0.25), alpha_H = c(0.02, 0.02), 
                            K_H = c(50, 200), kappa_H = c(20, 20))
 plot_sim(preyK_pred) +
@@ -103,7 +103,7 @@ plot_sim(preyK_pred) +
 
 #Different K, with predators, no movement between habitats----
 preyK_pred_nohab <- sim_system(T = 500, N_Ht = c(100, 100), rho_Ht = c(10, 10), 
-                         r = 0.1, e = 0.3, phi_H = c(0.95, 0.95), 
+                         r = 0.1, epsilon = 0.3, phi_H = c(0.95, 0.95), 
                          psi_HH = c(0, 0), alpha_H = c(0.02, 0.02), 
                          K_H = c(50, 200), kappa_H = c(20, 20))
 plot_sim(preyK_pred_nohab) +
@@ -120,7 +120,7 @@ plot_sim(preyK_pred_nohab) +
 
 #Different K, with predators, proportional habitat selection----
 preyK_pred_prophab <- sim_system(T = 500, N_Ht = c(100, 100), rho_Ht = c(10, 10), 
-                               r = 0.1, e = 0.3, phi_H = c(0.95, 0.95), 
+                               r = 0.1, epsilon = 0.3, phi_H = c(0.95, 0.95), 
                                psi_HH = c(0.4, 0.1), alpha_H = c(0.02, 0.02), 
                                K_H = c(50, 200), kappa_H = c(20, 20))
 plot_sim(preyK_pred_prophab) +
