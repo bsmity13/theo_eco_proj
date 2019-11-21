@@ -82,9 +82,9 @@ sim_system <- function(T = 100, N_Ht, rho_Ht, r, epsilon, phi_H, T_HH, alpha_H, 
   #Loop through times
   for(t in 2:T){
     #Calculate next prey population
-    N_H_next <- N_Htp1(N_Ht = Res[(t-1), c("N_A", "N_B")], T_HH, alpha_H, rho_Ht = Res[(t-1), c("rho_A", "rho_B")], r, K_H)
+    N_H_next <- N_Htp1(N_Ht = c(Res$N_A[(t-1)], Res$N_B[(t-1)]), T_HH, alpha_H, rho_Ht = c(Res$rho_A[(t-1)], Res$rho_B[(t-1)]), r, K_H)
     #Calculate next predator population
-    rho_H_next <- rho_Htp1(phi_H, rho_Ht = Res[(t-1), c("rho_A", "rho_B")], epsilon, alpha_H, N_Ht = Res[(t-1), c("N_A", "N_B")], kappa_H)
+    rho_H_next <- rho_Htp1(phi_H, rho_Ht = c(Res$rho_A[(t-1)], Res$rho_B[(t-1)]), epsilon, alpha_H, N_Ht = c(Res$N_A[(t-1)], Res$N_B[(t-1)]), kappa_H)
     #Create results row
     res <- data.frame(t = t, N_A = N_H_next[1], N_B = N_H_next[2], rho_A = rho_H_next[1], rho_B = rho_H_next[2])
     #Combine results
