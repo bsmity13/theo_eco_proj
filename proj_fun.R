@@ -45,6 +45,9 @@ N_Htp1 <- function(N_Ht, T_HH, alpha_H, rho_Ht, r, K_H){
   #Combine
   N_tp1A <- s1A + s2A + s3A
   N_tp1B <- s1B + s2B + s3B
+  #Round to 0 if less than 0.5
+  if(N_tp1A < 0.5){N_tp1A <- 0}
+  if(N_tp1B < 0.5){N_tp1B <- 0}
   #Return
   return(c(N_tp1A, N_tp1B))
 }
@@ -62,7 +65,10 @@ rho_Htp1 <- function(phi_H, rho_Ht, epsilon, alpha_H, N_Ht, kappa_H){
   s2B <- epsilon[2] * alpha_H[2] * rho_Ht[2] * N_Ht[2] * (1 - rho_Ht[2]/kappa_H[2])
   #Combine
   rho_Htp1A <- s1A + s2A
-  rho_Htp1B <- s1B + s2B
+  rho_Htp1B <- s1B + s2B  
+  #Round to 0 if less than 0.5
+  if(rho_Htp1A < 0.5){rho_Htp1A <- 0}
+  if(rho_Htp1B < 0.5){rho_Htp1B <- 0}
   #Return
   return(c(rho_Htp1A, rho_Htp1B))
 }
@@ -88,7 +94,7 @@ sim_system <- function(T = 100, N_Ht, rho_Ht, r, epsilon, phi_H, T_HH, alpha_H, 
   return(Res)
 }
 
-#basic <- sim_system(T = 100, N_Ht, rho_Ht, r, e, phi_H, T_HH, alpha_H, K_H, kappa_H)
+#basic <- sim_system(T = 100, N_Ht, rho_Ht, r, epsilon, phi_H, T_HH, alpha_H, K_H, kappa_H)
 
 #Plot the simulation----
 
