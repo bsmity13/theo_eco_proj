@@ -126,7 +126,7 @@ p4z <- plot_sim(sc4) +
            label = "Strong Proportional\nHabitat Preference", 
            fontface = "italic", size = 3)
 
-#High preference for A
+#High preference for A (strong inverse)
 sc5 <- sim_system(T = 200, N_Ht = base_N_Ht, rho_Ht = base_rho_Ht, 
                   r = base_r, epsilon = base_epsilon, phi_H = base_phi_H, 
                   T_HH = c(0.9, 0.1), alpha_H = base_alpha_H, 
@@ -199,6 +199,8 @@ sc8 <- sim_system(T = 200, N_Ht = base_N_Ht, rho_Ht = base_rho_Ht,
 
 #Zoom
 p8 <- plot_sim(sc8) +
+  geom_hline(yintercept = 250, linetype = "dashed", color = "gray40", size = 1) +
+  annotate(geom = "text", x = 50, y = 230, label = expression(K[A] * "=" * 250)) +
   annotate(geom = "label", x = 165, y=200, 
            label = "High Inverse\nAttack Difference", 
            fontface = "italic", size = 3)
@@ -217,4 +219,44 @@ final678 <- plot_grid(
   labels = c("a", "b", "c", NA))
 
 ggsave(plot = final678, filename = "fig/sc6-8.tiff", width = 6.5, height = 5.5, units = "in",
+       dpi = 200, compression = "lzw")
+
+#Combination Scenarios----
+#Strong proportional preference, high proportional attack difference
+sc9 <- sim_system(T = 200, N_Ht = base_N_Ht, rho_Ht = base_rho_Ht, 
+                  r = base_r, epsilon = base_epsilon, phi_H = base_phi_H, 
+                  T_HH = c(0.1, 0.9), alpha_H = c(0.005, 0.025), 
+                  K_H = base_K_H, base_kappa_H)
+p9z <- plot_sim(sc9) +
+  coord_cartesian(ylim = c(0, 100)) +
+  annotate(geom = "label", x = 150, y=80, 
+           label = "Strong Prop. Pref. &\nHigh Prop. Attack Diff.", 
+           fontface = "italic", size = 3)
+
+#Strong inverse preference, high inverse attack difference
+sc10 <- sim_system(T = 200, N_Ht = base_N_Ht, rho_Ht = base_rho_Ht, 
+                  r = base_r, epsilon = base_epsilon, phi_H = base_phi_H, 
+                  T_HH = c(0.9, 0.1), alpha_H = c(0.025, 0.005), 
+                  K_H = base_K_H, base_kappa_H)
+p10z <- plot_sim(sc10) +
+  coord_cartesian(ylim = c(0, 100)) +
+  annotate(geom = "label", x = 155, y=95, 
+           label = "Strong Inv. Pref. &\nHigh Inv. Attack Diff.", 
+           fontface = "italic", size = 3)
+
+#Combine
+row910 <- plot_grid(
+  p9z + theme(legend.position = "none"), 
+  p10z + 
+    theme(legend.position = "none",
+          axis.text.y = element_blank()) +
+    ylab(" "),
+  labels = c("a", "b"))
+
+final910 <- plot_grid(
+  row910, leg,
+  ncol = 1, rel_heights = c(1, .1)
+)
+
+ggsave(plot = final910, filename = "fig/sc910.tiff", width = 6.5, height = 3.5, units = "in",
        dpi = 200, compression = "lzw")
