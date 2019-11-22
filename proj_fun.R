@@ -103,23 +103,25 @@ plot_sim <- function(sim, plot0 = FALSE){
   tidyd <- pivot_longer(sim, -t, names_to = "pop", values_to = "size")
   #Remove 0s if plot0 is FALSE
   if(!plot0) {tidyd$size[which(tidyd$size==0)] <- NA}
+  #Factor pop to control plotting order
+  tidyd$pop <- factor(tidyd$pop, levels = c("N_A", "rho_A", "N_B", "rho_B"))
   #ggplot
   ggp <- ggplot(data = tidyd, aes(x = t, y = size, color = pop, linetype = pop, size = pop)) +
     geom_line() +
     theme_bw() +
     xlab("Time (t)") +
     ylab("Population Sizes") +
-    scale_color_manual(
-      values = c("navyblue", "firebrick", "skyblue", "hotpink"),
+    scale_color_manual( #From factoring above, order is: N_A, rho_A, N_B, rho_B
+      values = c("navyblue", "skyblue", "firebrick", "hotpink"),
       breaks = c("N_A", "rho_A", "N_B", "rho_B"),
       labels = expression(N[A], rho[A], N[B], rho[B]),
       name = "Population") +
     scale_linetype_manual(
-      values = c("solid", "3131", "solid", "3131"),
+      values = c("solid", "solid", "3131", "3131"),
       breaks = c("N_A", "rho_A", "N_B", "rho_B"),
       labels = expression(N[A], rho[A], N[B], rho[B]),
       name = "Population") +
-    scale_size_manual(values = c(2, 1.25, 2, 1.25),
+    scale_size_manual(values = c(2, 2, 1.25, 1.25),
                       breaks = c("N_A", "rho_A", "N_B", "rho_B"),
                       labels = expression(N[A], rho[A], N[B], rho[B]),
                       name = "Population")
