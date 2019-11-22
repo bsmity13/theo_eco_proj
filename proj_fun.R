@@ -98,9 +98,11 @@ sim_system <- function(T = 100, N_Ht, rho_Ht, r, epsilon, phi_H, T_HH, alpha_H, 
 
 #Plot the simulation----
 
-plot_sim <- function(sim){
+plot_sim <- function(sim, plot0 = FALSE){
   #Tidy data
   tidyd <- pivot_longer(sim, -t, names_to = "pop", values_to = "size")
+  #Remove 0s if plot0 is FALSE
+  if(!plot0) {tidyd$size[which(tidyd$size==0)] <- NA}
   #ggplot
   ggp <- ggplot(data = tidyd, aes(x = t, y = size, color = pop, linetype = pop, size = pop)) +
     geom_line() +
